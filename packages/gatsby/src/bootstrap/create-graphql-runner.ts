@@ -16,7 +16,8 @@ type Runner = (
 
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
-  reporter: Reporter
+  reporter: Reporter,
+  { parentSpan } = {}
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store)
@@ -39,7 +40,10 @@ export const createGraphQLRunner = (
   })
 
   return (query, context): ReturnType<Runner> =>
-    runner.query(query, context).then(result => {
+    runner.query(query, context, {
+      queryName: `gatsby-node query`,
+      parentSpan,
+    }).then(result => {
       if (result.errors) {
         const structuredErrors = result.errors
           .map(e => {

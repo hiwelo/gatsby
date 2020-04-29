@@ -469,7 +469,9 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, report)
+  const graphqlRunner = createGraphQLRunner(store, report, {
+    parentSpan: bootstrapSpan,
+  })
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {

@@ -1221,7 +1221,12 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       external2
     }
     `
-    const result = await graphql(newSchema, query)
+    const result = await graphql({
+      schema: newSchema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     expect(result).toEqual({
       data: {
         external: {
@@ -1263,7 +1268,12 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       external2
     }
     `
-    const result = await graphql(newSchema, query)
+    const result = await graphql({
+      schema: newSchema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     expect(result).toEqual({
       data: {
         external: {
